@@ -1,0 +1,10 @@
+if (solidMode) {
+    project.ext {
+        packageName = 'qiyi.scan'
+        apkName = packageName.replace(".", "_")
+    }
+    apply from: '../sub-project-build.gradle'
+} else {
+    apply plugin: 'com.android.library'
+    apply from: '../global_config.gradle'
+}
