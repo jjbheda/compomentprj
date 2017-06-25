@@ -9,6 +9,11 @@ buildscript {
 }
 
 import org.apache.tools.ant.taskdefs.condition.Os
+
+import java.util.zip.ZipEntry
+import java.util.zip.ZipFile
+import java.util.zip.ZipInputStream
+
 project.ext {
     BUILD_TOOLS_VERSION = '21.1.2'
     TARGET_SDK_VERSION = 23
@@ -41,33 +46,46 @@ task init << {
     new File(buildDir, 'intermediates/classes-obfuscated').mkdirs()
     new File(buildDir, 'intermediates/res').mkdirs()
     new File(buildDir, 'intermediates/dex').mkdirs()
+    copyInputFile.execute()
+    aarLibPrepare.execute()
+}
+
+
+task copyInputFile(type: Copy) {
+    from configurations.needBuildFile
+    into "${rootDir}/build-inputs/"
+}
+
+task aarLibPrepare(type: UnZipTask) {
+    sources = fileTree(new File(rootDir, 'build-inputs')).include("*.aar")
+    target = "$buildDir/intermediates/explore-aar"
 }
 
 task aaptRelease (type: Exec,dependsOn:['init']){
 //task aaptRelease (type: Exec,dependsOn:'init'){
-
     inputs.file "$sdk.androidJar"
     inputs.file "${rootDir}/build-outputs/QYVideoClient-base-release.apk"
     inputs.file "$projectDir/AndroidManifest.xml"
     inputs.dir "$projectDir/res"
     inputs.dir "$projectDir/assets"
     inputs.file "${rootDir}/QYVideoClient/build/generated/source/r/release/com/huanju/chajianhuatest/R.java"
-    inputs.file "${rootDir}/QYVideoClient/build/generated/source/r/release/qiyi/basemodule/R.java"
     outputs.dir "$buildDir/gen/r"
     outputs.file "$buildDir/intermediates/res/resources.zip"
     outputs.file "$buildDir/intermediates/res/aapt-rules.txt"
 
-    workingDir buildDir
-    executable sdk.aapt
-
-    def resourceId=''
-    def parseApkXml=(new XmlParser()).parse(new File(rootDir,'apk_module_config.xml'))
-    parseApkXml.Module.each{ module->
-        if( module.@packageName=="${packageName}") {
-            resourceId=module.@resourceId
+    def resourceId = ''
+    def parseApkXml = (new XmlParser()).parse(new File(rootDir, 'apk_module_config.xml'))
+    parseApkXml.Module.each { module ->
+        if (module.@packageName == "${packageName}") {
+            resourceId = module.@resourceId
             println "find packageName: " + module.@packageName + " ,resourceId:" + resourceId
         }
     }
+    workingDir buildDir
+    executable sdk.aapt
+    workingDir buildDir
+    executable sdk.aapt
+
     def argv = []
     argv << 'package'   //打包
     argv << "-v"
@@ -76,6 +94,47 @@ task aaptRelease (type: Exec,dependsOn:['init']){
     argv << "$sdk.androidJar"        //添加一个已有的固化jar包
     argv << '-I'
     argv << "${rootDir}/build-outputs/QYVideoClient-base-release.apk"
+    if (project.hasProperty('parentModuleName') && rootProject.hasProperty('TypeModuleSO')) {
+        argv << '-I'
+        argv << "${rootDir}/build-inputs/${parentModuleName}-${parentDependency}-RES.zip"
+    } else if (project.hasProperty('parentModuleName')) {
+        def parentProject = project(":${parentModuleName}");
+        argv << '-I'
+        argv << "${parentProject.buildDir}/intermediates/res/resources.zip"
+    }
+
+    //---------------aar start
+    def aarFileTrees = new File(rootDir, 'build-inputs').list(new FilenameFilter() {
+        @Override
+        boolean accept(File dir, String name) {
+            return name.endsWith(".aar");
+        }
+    })
+    if (aarFileTrees.size() > 0) {
+        argv << '--auto-add-overlay'
+        def extraPackages = ""
+        aarFileTrees.each {
+            aarName ->
+                println "$aarName"
+                def parseManifestXml = new XmlSlurper().parse("$buildDir/intermediates/explore-aar/${aarName}/AndroidManifest.xml")
+                println "+++++++++++++++++parseManifestXml.@'package': " + parseManifestXml.@'package'
+                extraPackages = extraPackages + ":" + parseManifestXml.@'package'
+                argv << '-M'
+                argv << "$buildDir/intermediates/explore-aar/${aarName}/AndroidManifest.xml"
+                //指定manifest文件
+                argv << '-S'
+                argv << "$buildDir/intermediates/explore-aar/${aarName}/res"
+                argv << '-A'
+                argv << "$buildDir/intermediates/explore-aar/${aarName}/assets"
+                // assets目录
+        }
+        extraPackages = extraPackages.substring(1, extraPackages.length())
+        println "+++++++++++++++++--extra-packages : " + extraPackages
+        argv << '--extra-packages'
+        argv << extraPackages
+    }
+    //---------------aar end
+
     argv << '-M'
     argv << "$projectDir/AndroidManifest.xml"    //指定manifest文件
     argv << '-S'
@@ -108,16 +167,37 @@ task compileRelease(type: JavaCompile,dependsOn:'aaptRelease') {
     inputs.file "${rootDir}/QYVideoClient/build/intermediates/classes-proguard/release/classes.jar"
     inputs.files fileTree("$projectDir/src").include('**/*.java')
     inputs.files fileTree("$buildDir/gen/r").include('**/*.java')
+    inputs.files fileTree("$buildDir/intermediates/explore-aar").include('**/*.jar')
 
     outputs.dir "$buildDir/intermediates/classes"
-    sourceCompatibility = '1.6'
-    targetCompatibility = '1.6'
+    sourceCompatibility = '1.7'
+    targetCompatibility = '1.7'
+
+    def inputJarfile = ''
+    if (project.hasProperty('parentModuleName') && rootProject.hasProperty('TypeModuleSO')) {
+        inputJarfile = "${rootDir}/build-inputs/${parentModuleName}-${parentDependency}-JAR.jar"
+        inputs.file "${inputJarfile}"
+    } else if (project.hasProperty('parentModuleName')) {
+        def parentProject = project(":$parentModuleName");
+        inputJarfile = "${parentProject.buildDir}/intermediates/classes-obfuscated/classes-obfuscated.jar"
+        inputs.file "${inputJarfile}"
+    }
     classpath = files(
             "${sdk.androidJar}",
             "${sdk.apacheJar}",
             fileTree("${projectDir}/libs").include('*.jar')
-            , "${rootDir}/QYVideoClient/build/intermediates/classes-proguard/release/classes.jar"
     )
+
+    def aarFileTrees = new File(rootDir, 'build-inputs').list(new FilenameFilter() {
+        @Override
+        boolean accept(File dir, String name) {
+            return name.endsWith(".aar");
+        }
+    })
+    println "-------compileRelease-" + aarFileTrees.size()
+    if (aarFileTrees.size() > 0) {
+        classpath.from(fileTree("$buildDir/intermediates/explore-aar").include('**/*.jar'))
+    }
 
     destinationDir = file("$buildDir/intermediates/classes")
 
@@ -129,8 +209,8 @@ task compileRelease(type: JavaCompile,dependsOn:'aaptRelease') {
 }
 
 
-task dexRelease (type:Exec){
-    inputs.file "${buildDir}/intermediates/classes"
+task dexRelease(type: Exec, dependsOn: 'obfuscateRelease') {
+    inputs.file "${buildDir}/intermediates/classes-obfuscated/classes-obfuscated.jar"
     outputs.file "${buildDir}/intermediates/dex/${project.name}_dex.zip"
     workingDir buildDir
     executable sdk.dex
@@ -138,7 +218,7 @@ task dexRelease (type:Exec){
     def argv = []
     argv << '--dex'
     argv << "--output=${buildDir}/intermediates/dex/${project.name}_dex.zip"
-    argv << "${buildDir}/intermediates/classes"
+    argv << "${buildDir}/intermediates/classes-obfuscated/classes-obfuscated.jar"
 
     args = argv
 }
@@ -149,7 +229,8 @@ task obfuscateRelease(type:proguard.gradle.ProGuardTask, dependsOn:'compileRelea
     inputs.dir "$buildDir/intermediates/classes"
     inputs.files fileTree("${projectDir}/libs").include('*.jar')
     inputs.file "${sdk.androidJar}"
-    inputs.file "${rootDir}/QYVideoClient/build/intermediates/classes-proguard/release/classes.jar"
+//    inputs.file "${rootDir}/QYVideoClient/build/intermediates/classes-proguard/release/classes.jar"
+    inputs.files fileTree("$buildDir/intermediates/explore-aar").include('**/*.jar')
 
     outputs.file "$buildDir/intermediates/classes-obfuscated/classes-obfuscated.jar"
     outputs.file "${rootDir}/build-outputs/${apkName}-mapping.txt"
@@ -157,6 +238,7 @@ task obfuscateRelease(type:proguard.gradle.ProGuardTask, dependsOn:'compileRelea
     configuration file ("$buildDir/intermediates/res/aapt-rules.txt")
     injars file("$buildDir/intermediates/classes")
     injars fileTree("${projectDir}/libs").include('*.jar')
+    injars fileTree("$buildDir/intermediates/explore-aar").include('**/*.jar')
 
     outjars file("$buildDir/intermediates/classes-obfuscated/classes-obfuscated.jar")
     printmapping file("${rootDir}/build-outputs/${apkName}-mapping.txt")
@@ -164,6 +246,54 @@ task obfuscateRelease(type:proguard.gradle.ProGuardTask, dependsOn:'compileRelea
     libraryjars file("${sdk.androidJar}")
     libraryjars file("${rootDir}/QYVideoClient/build/intermediates/classes-proguard/release/classes.jar")
 }
+
+class UnZipTask extends DefaultTask {
+    @InputFiles
+    FileCollection sources
+
+    String target
+
+    @TaskAction
+    void concat() {
+        String path = target + File.separatorChar
+        sources.each { sourceFile ->
+            ZipFile zipFile = new ZipFile(sourceFile)
+            ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(sourceFile))
+            ZipEntry zipEntry = null
+            while ((zipEntry = zipInputStream.getNextEntry()) != null) {
+                String fileName = zipEntry.getName()
+                File tmpFile = new File(path + sourceFile.getName() + File.separatorChar + fileName)
+                if (!tmpFile.getParentFile().exists()) {
+                    tmpFile.getParentFile().mkdirs()
+                }
+                if (zipEntry.isDirectory()) {
+                    tmpFile.mkdir()
+                    continue
+                }
+                System.out.println(tmpFile.getName())
+                OutputStream os = new FileOutputStream(tmpFile)
+                InputStream is = zipFile.getInputStream(zipEntry)
+                int len = 0
+                while ((len = is.read()) != -1)
+                    os.write(len)
+                os.close()
+                is.close()
+            }
+            zipInputStream.close();
+            File tmpFile = new File(path + sourceFile.getName() + File.separatorChar + "assets/.gitignore")
+            if (!tmpFile.getParentFile().exists()) {
+                tmpFile.getParentFile().mkdirs()
+            }
+            OutputStream os = new FileOutputStream(tmpFile)
+            os.write("/build\n*.iml".bytes)
+            os.close()
+        }
+
+    }
+}
+
+
+
 
 task bundleRelease (type:Zip,dependsOn:['compileRelease','aaptRelease','obfuscateRelease','dexRelease']){
     inputs.file "$buildDir/intermediates/dex/${project.name}_dex.zip"

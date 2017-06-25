@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CompomentPrj.iml" filepath="$PROJECT_DIR$/CompomentPrj.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/QYVideoClient/QYVideoClient.iml" filepath="$PROJECT_DIR$/app/QYVideoClient/QYVideoClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bundle/bundle.iml" filepath="$PROJECT_DIR$/bundle/bundle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/businessmodule/businessmodule.iml" filepath="$PROJECT_DIR$/businessmodule/businessmodule.iml" />
       <module fileurl="file://$PROJECT_DIR$/scan/scan.iml" filepath="$PROJECT_DIR$/scan/scan.iml" />
     </modules>
   </component>

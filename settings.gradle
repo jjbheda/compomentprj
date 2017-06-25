@@ -1,1 +1,2 @@
-include ':app',  ':scan'
+include ':QYVideoClient', ':scan', ':bundle', ':businessmodule'
+project(':QYVideoClient').projectDir = new File(rootDir, 'app/QYVideoClient')

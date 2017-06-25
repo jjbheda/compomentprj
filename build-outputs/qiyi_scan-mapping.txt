@@ -1,0 +1,18 @@
+qiyi.businessmodule.StringUtils -> qiyi.a.a:
+    void <init>() -> <init>
+qiyi.scan.ScanLineView -> qiyi.scan.ScanLineView:
+    android.graphics.Rect mRect -> a
+    android.view.animation.TranslateAnimation mAnimation -> b
+    void <init>(android.content.Context) -> <init>
+    void <init>(android.content.Context,android.util.AttributeSet) -> <init>
+    void <init>(android.content.Context,android.util.AttributeSet,int) -> <init>
+    void init(android.content.Context) -> a
+    void onDraw(android.graphics.Canvas) -> onDraw
+    android.view.animation.TranslateAnimation access$000(qiyi.scan.ScanLineView) -> a
+qiyi.scan.ScanLineView$1 -> qiyi.scan.a:
+    qiyi.scan.ScanLineView this$0 -> a
+    void <init>(qiyi.scan.ScanLineView) -> <init>
+    void run() -> run
+qiyi.scan.ScanMainActivity -> qiyi.scan.ScanMainActivity:
+    void <init>() -> <init>
+    void onCreate(android.os.Bundle) -> onCreate

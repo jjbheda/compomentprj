@@ -3,8 +3,30 @@ if (solidMode) {
         packageName = 'qiyi.scan'
         apkName = packageName.replace(".", "_")
     }
+    apply from: '../common_build.gradle'
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+    dependencies {
+        needBuildFile(name:'businessmodule-1.0',ext:'aar')
+    }
     apply from: '../sub-project-build.gradle'
+
+
 } else {
     apply plugin: 'com.android.library'
     apply from: '../global_config.gradle'
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+    dependencies{
+//        provided project(':businessmodule')
+        compile(name:'businessmodule-1.0',ext:'aar')
+    }
+
 }

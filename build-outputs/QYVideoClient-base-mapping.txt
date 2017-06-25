@@ -1,0 +1,426 @@
+qiyi.bundle.framework.Bundle -> qiyi.bundle.framework.a:
+qiyi.bundle.framework.BundleCore -> qiyi.bundle.framework.b:
+    qiyi.bundle.framework.BundleCore instance -> a
+    qiyi.bundle.log.Logger log -> b
+    java.util.List bundleDelayListeners -> c
+    java.util.List bundleSyncListeners -> d
+    void <init>() -> <init>
+    qiyi.bundle.framework.BundleCore getInstance() -> a
+    void ConfigLogger(boolean,int) -> a
+    void init(android.app.Application) -> a
+    void startup(java.util.Properties) -> a
+    void run() -> b
+    void notifySyncBundleListers() -> d
+    qiyi.bundle.framework.Bundle getBundle(java.lang.String) -> a
+    qiyi.bundle.framework.Bundle installBundle(java.lang.String,java.io.InputStream) -> a
+    java.util.List getBundles() -> c
+    void <clinit>() -> <clinit>
+qiyi.bundle.framework.BundleException -> qiyi.bundle.framework.BundleException:
+    java.lang.Throwable throwable -> a
+    void <init>(java.lang.String,java.lang.Throwable) -> <init>
+    void <init>(java.lang.String) -> <init>
+qiyi.bundle.framework.BundleImpl -> qiyi.bundle.framework.c:
+    qiyi.bundle.log.Logger log -> a
+    qiyi.bundle.framework.storage.Archive archive -> b
+    java.io.File bundleDir -> c
+    java.lang.String location -> d
+    long bundleID -> e
+    boolean isOpt -> f
+    void <init>(java.io.File) -> <init>
+    void <init>(java.io.File,java.lang.String,long,java.io.InputStream) -> <init>
+    qiyi.bundle.framework.storage.Archive getArchive() -> a
+    java.lang.String getLocation() -> b
+    void optDexFile() -> c
+    void updateMetadata() -> d
+    java.lang.String toString() -> toString
+    void <clinit>() -> <clinit>
+qiyi.bundle.framework.Framework -> qiyi.bundle.framework.d:
+    qiyi.bundle.log.Logger log -> a
+    java.lang.String BASEDIR -> e
+    java.lang.String BUNDLE_LOCATION -> f
+    java.lang.String STORAGE_LOCATION -> b
+    java.util.Map bundles -> c
+    long nextBundleID -> g
+    java.util.Properties properties -> d
+    void startup(java.util.Properties) -> a
+    void startup() -> a
+    java.util.List getBundles() -> b
+    qiyi.bundle.framework.Bundle getBundle(java.lang.String) -> a
+    void initialize() -> c
+    void launch() -> d
+    boolean getProperty(java.lang.String,boolean) -> a
+    java.lang.String getProperty(java.lang.String,java.lang.String) -> a
+    void storeProfile() -> e
+    void storeMetadata() -> f
+    int restoreProfile() -> g
+    void deleteDirectory(java.io.File) -> a
+    qiyi.bundle.framework.BundleImpl installNewBundle(java.lang.String,java.io.InputStream) -> a
+    void <clinit>() -> <clinit>
+qiyi.bundle.framework.storage.Archive -> qiyi.bundle.framework.a.a:
+    java.io.File getArchiveFile() -> a
+    void optDexFile() -> b
+qiyi.bundle.framework.storage.BundleAchive -> qiyi.bundle.framework.a.b:
+    java.lang.Long BENGIN_VERSION -> a
+    java.io.File bundleDir -> b
+    qiyi.bundle.framework.storage.BundleArchiveRevision currentRevision -> c
+    java.util.SortedMap revisionSortedMap -> d
+    void <init>(java.io.File) -> <init>
+    void <init>(java.io.File,java.io.InputStream) -> <init>
+    java.io.File getArchiveFile() -> a
+    void optDexFile() -> b
+    void <clinit>() -> <clinit>
+qiyi.bundle.framework.storage.BundleArchiveRevision -> qiyi.bundle.framework.a.c:
+    qiyi.bundle.log.Logger log -> a
+    long revisionNum -> b
+    java.io.File revisionDir -> c
+    java.io.File bundleFile -> d
+    java.lang.String revisionLocation -> e
+    void <init>(long,java.io.File,java.io.InputStream) -> <init>
+    void <init>(long,java.io.File) -> <init>
+    void updateMetaData() -> a
+    java.io.File getRevisionFile() -> b
+    void optDexFile() -> c
+    void <clinit>() -> <clinit>
+qiyi.bundle.hack.AndroidHack -> qiyi.bundle.hack.a:
+    java.lang.Object _mLoadedApk -> a
+    java.lang.Object _sActivityThread -> b
+    java.lang.Object getActivityThread() -> a
+    java.lang.Object getLoadedApk(java.lang.Object,java.lang.String) -> a
+    void injectResources(android.app.Application,android.content.res.Resources) -> a
+    android.app.Instrumentation getInstrumentation() -> b
+    void injectInstrumentationHook(android.app.Instrumentation) -> a
+    java.lang.Object access$002(java.lang.Object) -> a
+    void <clinit>() -> <clinit>
+qiyi.bundle.hack.AndroidHack$ActivityThreadGetter -> qiyi.bundle.hack.a$a:
+    void <init>() -> <init>
+    void run() -> run
+qiyi.bundle.hack.AssertionArrayException -> qiyi.bundle.hack.AssertionArrayException:
+    java.util.List mAssertionErr -> a
+    void <init>(java.lang.String) -> <init>
+    void addException(qiyi.bundle.hack.Hack$HackDeclaration$HackAssertionException) -> a
+    java.lang.String toString() -> toString
+qiyi.bundle.hack.Hack -> qiyi.bundle.hack.Hack:
+    qiyi.bundle.hack.Hack$AssertionFailureHandler sFailureHandler -> a
+    qiyi.bundle.hack.Hack$HackedClass into(java.lang.Class) -> a
+    qiyi.bundle.hack.Hack$HackedClass into(java.lang.String) -> a
+    void fail(qiyi.bundle.hack.Hack$HackDeclaration$HackAssertionException) -> b
+    void setAssertionFailureHandler(qiyi.bundle.hack.Hack$AssertionFailureHandler) -> a
+    void access$000(qiyi.bundle.hack.Hack$HackDeclaration$HackAssertionException) -> a
+qiyi.bundle.hack.Hack$AssertionFailureHandler -> qiyi.bundle.hack.Hack$a:
+    boolean onAssertionFailure(qiyi.bundle.hack.Hack$HackDeclaration$HackAssertionException) -> a
+qiyi.bundle.hack.Hack$HackDeclaration -> qiyi.bundle.hack.Hack$HackDeclaration:
+    void <init>() -> <init>
+qiyi.bundle.hack.Hack$HackDeclaration$HackAssertionException -> qiyi.bundle.hack.Hack$HackDeclaration$HackAssertionException:
+    java.lang.Class mHackedClass -> a
+    java.lang.String mHackedFieldName -> b
+    java.lang.String mHackedMethodName -> c
+    void <init>(java.lang.String) -> <init>
+    void <init>(java.lang.Exception) -> <init>
+    java.lang.String toString() -> toString
+    java.lang.Class getHackedClass() -> a
+    void setHackedClass(java.lang.Class) -> a
+    java.lang.String getHackedMethodName() -> b
+    void setHackedMethodName(java.lang.String) -> a
+    java.lang.String getHackedFieldName() -> c
+    void setHackedFieldName(java.lang.String) -> b
+qiyi.bundle.hack.Hack$HackedClass -> qiyi.bundle.hack.Hack$b:
+    java.lang.Class mClass -> a
+    qiyi.bundle.hack.Hack$HackedField staticField(java.lang.String) -> a
+    qiyi.bundle.hack.Hack$HackedField field(java.lang.String) -> b
+    qiyi.bundle.hack.Hack$HackedMethod method(java.lang.String,java.lang.Class[]) -> a
+    void <init>(java.lang.Class) -> <init>
+    java.lang.Class getmClass() -> a
+qiyi.bundle.hack.Hack$HackedField -> qiyi.bundle.hack.Hack$c:
+    java.lang.reflect.Field mField -> a
+    qiyi.bundle.hack.Hack$HackedField ofGenericType(java.lang.Class) -> a
+    qiyi.bundle.hack.Hack$HackedField ofType(java.lang.Class) -> b
+    java.lang.Object get(java.lang.Object) -> a
+    void set(java.lang.Object,java.lang.Object) -> a
+    void <init>(java.lang.Class,java.lang.String,int) -> <init>
+    java.lang.reflect.Field getField() -> a
+qiyi.bundle.hack.Hack$HackedMethod -> qiyi.bundle.hack.Hack$d:
+    java.lang.reflect.Method mMethod -> a
+    java.lang.Object invoke(java.lang.Object,java.lang.Object[]) -> a
+    void <init>(java.lang.Class,java.lang.String,java.lang.Class[],int) -> <init>
+qiyi.bundle.hack.SysHacks -> qiyi.bundle.hack.b:
+    qiyi.bundle.hack.Hack$HackedClass ActivityThread -> a
+    qiyi.bundle.hack.Hack$HackedMethod ActivityThread_currentActivityThread -> b
+    qiyi.bundle.hack.Hack$HackedField ActivityThread_mAllApplications -> c
+    qiyi.bundle.hack.Hack$HackedField ActivityThread_mInstrumentation -> d
+    qiyi.bundle.hack.Hack$HackedField ActivityThread_mPackages -> e
+    qiyi.bundle.hack.Hack$HackedField ActivityThread_sPackageManager -> f
+    qiyi.bundle.hack.Hack$HackedClass Application -> g
+    qiyi.bundle.hack.Hack$HackedMethod Application_attach -> h
+    qiyi.bundle.hack.Hack$HackedClass AssetManager -> i
+    qiyi.bundle.hack.Hack$HackedMethod AssetManager_addAssetPath -> j
+    qiyi.bundle.hack.Hack$HackedClass ContextImpl -> k
+    qiyi.bundle.hack.Hack$HackedField ContextImpl_mResources -> l
+    qiyi.bundle.hack.Hack$HackedField ContextImpl_mTheme -> m
+    qiyi.bundle.hack.Hack$HackedClass ContextThemeWrapper -> n
+    qiyi.bundle.hack.Hack$HackedField ContextThemeWrapper_mBase -> o
+    qiyi.bundle.hack.Hack$HackedField ContextThemeWrapper_mResources -> p
+    qiyi.bundle.hack.Hack$HackedField ContextThemeWrapper_mTheme -> q
+    qiyi.bundle.hack.Hack$HackedClass ContextWrapper -> r
+    qiyi.bundle.hack.Hack$HackedField ContextWrapper_mBase -> s
+    java.util.ArrayList GeneratePackageInfoList -> t
+    java.util.ArrayList GetPackageInfoList -> u
+    qiyi.bundle.hack.Hack$HackedClass IPackageManager -> v
+    qiyi.bundle.hack.Hack$HackedClass LoadedApk -> w
+    qiyi.bundle.hack.Hack$HackedField LoadedApk_mAppDir -> x
+    qiyi.bundle.hack.Hack$HackedField LoadedApk_mApplication -> y
+    qiyi.bundle.hack.Hack$HackedField LoadedApk_mResDir -> z
+    qiyi.bundle.hack.Hack$HackedField LoadedApk_mResources -> A
+    qiyi.bundle.hack.Hack$HackedClass Resources -> B
+    qiyi.bundle.hack.Hack$HackedField Resources_mAssets -> C
+    qiyi.bundle.hack.Hack$HackedClass Service -> D
+    qiyi.bundle.hack.Hack$HackedClass Instrumentation -> E
+    boolean sIsIgnoreFailure -> F
+    boolean sIsReflectAvailable -> G
+    boolean sIsReflectChecked -> H
+    qiyi.bundle.hack.AssertionArrayException mExceptionArray -> J
+    qiyi.bundle.log.Logger log -> I
+    void <init>() -> <init>
+    boolean defineAndVerify() -> a
+    void allClasses() -> b
+    void allFields() -> c
+    void allMethods() -> d
+    void allConstructors() -> e
+    boolean onAssertionFailure(qiyi.bundle.hack.Hack$HackDeclaration$HackAssertionException) -> a
+    void <clinit>() -> <clinit>
+qiyi.bundle.loader.BundlePathLoader -> qiyi.bundle.a.a:
+    void <init>() -> <init>
+    void installBundleDexs(java.lang.ClassLoader,java.io.File,java.util.List,boolean) -> a
+    java.lang.reflect.Field findField(java.lang.Object,java.lang.String) -> b
+    java.lang.reflect.Method findMethod(java.lang.Object,java.lang.String,java.lang.Class[]) -> b
+    void expandFieldArray(java.lang.Object,java.lang.String,java.lang.Object[],boolean) -> b
+    java.lang.reflect.Field access$400(java.lang.Object,java.lang.String) -> a
+    java.lang.reflect.Method access$500(java.lang.Object,java.lang.String,java.lang.Class[]) -> a
+    void access$600(java.lang.Object,java.lang.String,java.lang.Object[],boolean) -> a
+qiyi.bundle.loader.BundlePathLoader$V14 -> qiyi.bundle.a.a$a:
+    void install(java.lang.ClassLoader,java.util.List,java.io.File,boolean) -> b
+    java.lang.Object[] makeDexElements(java.lang.Object,java.util.ArrayList,java.io.File) -> a
+    void access$200(java.lang.ClassLoader,java.util.List,java.io.File,boolean) -> a
+qiyi.bundle.loader.BundlePathLoader$V19 -> qiyi.bundle.a.a$b:
+    void install(java.lang.ClassLoader,java.util.List,java.io.File,boolean) -> b
+    java.lang.Object[] makeDexElements(java.lang.Object,java.util.ArrayList,java.io.File,java.util.ArrayList) -> a
+    void access$100(java.lang.ClassLoader,java.util.List,java.io.File,boolean) -> a
+qiyi.bundle.loader.BundlePathLoader$V23 -> qiyi.bundle.a.a$c:
+    void install(java.lang.ClassLoader,java.util.List,java.io.File,boolean) -> b
+    void access$000(java.lang.ClassLoader,java.util.List,java.io.File,boolean) -> a
+qiyi.bundle.loader.BundlePathLoader$V4 -> qiyi.bundle.a.a$d:
+    void install(java.lang.ClassLoader,java.util.List,boolean) -> b
+    void access$300(java.lang.ClassLoader,java.util.List,boolean) -> a
+qiyi.bundle.log.LogcatLogger -> qiyi.bundle.log.a:
+    java.lang.String tag -> a
+    void <init>(java.lang.String) -> <init>
+    void <init>(java.lang.Class) -> <init>
+    void log(java.lang.String,qiyi.bundle.log.Logger$LogLevel) -> a
+    void log(java.lang.String,qiyi.bundle.log.Logger$LogLevel,java.lang.Throwable) -> a
+qiyi.bundle.log.LogcatLogger$1 -> qiyi.bundle.log.a$1:
+    int[] $SwitchMap$qiyi$bundle$log$Logger$LogLevel -> a
+    void <clinit>() -> <clinit>
+qiyi.bundle.log.Logger -> qiyi.bundle.log.Logger:
+    void log(java.lang.String,qiyi.bundle.log.Logger$LogLevel) -> a
+    void log(java.lang.String,qiyi.bundle.log.Logger$LogLevel,java.lang.Throwable) -> a
+qiyi.bundle.log.Logger$LogLevel -> qiyi.bundle.log.Logger$LogLevel:
+    qiyi.bundle.log.Logger$LogLevel DBUG -> a
+    qiyi.bundle.log.Logger$LogLevel INFO -> b
+    qiyi.bundle.log.Logger$LogLevel WARN -> c
+    qiyi.bundle.log.Logger$LogLevel ERROR -> d
+    int _level -> e
+    qiyi.bundle.log.Logger$LogLevel[] $VALUES -> f
+    qiyi.bundle.log.Logger$LogLevel[] values() -> values
+    qiyi.bundle.log.Logger$LogLevel valueOf(java.lang.String) -> valueOf
+    void <init>(java.lang.String,int,int) -> <init>
+    int getLevel() -> a
+    qiyi.bundle.log.Logger$LogLevel getValue(int) -> a
+    void <clinit>() -> <clinit>
+qiyi.bundle.log.LoggerFactory -> qiyi.bundle.log.b:
+    boolean isNeedLog -> a
+    qiyi.bundle.log.Logger$LogLevel minLevel -> b
+    qiyi.bundle.log.Logger getLogcatLogger(java.lang.String) -> a
+    qiyi.bundle.log.Logger getLogcatLogger(java.lang.String,java.lang.Class) -> a
+    void <clinit>() -> <clinit>
+qiyi.bundle.runtime.BundleInstalledListener -> qiyi.bundle.b.a:
+    void onBundleInstalled() -> a
+qiyi.bundle.runtime.ContextImplHook -> qiyi.bundle.b.b:
+    qiyi.bundle.log.Logger log -> a
+    void <init>(android.content.Context) -> <init>
+    android.content.res.Resources getResources() -> getResources
+    android.content.res.AssetManager getAssets() -> getAssets
+    void <clinit>() -> <clinit>
+qiyi.bundle.runtime.DelegateResources -> qiyi.bundle.b.c:
+    qiyi.bundle.log.Logger log -> a
+    void <init>(android.content.res.AssetManager,android.content.res.Resources) -> <init>
+    void newDelegateResources(android.app.Application,android.content.res.Resources) -> a
+    void <clinit>() -> <clinit>
+qiyi.bundle.runtime.InstrumentationHook -> qiyi.bundle.b.d:
+    qiyi.bundle.log.Logger log -> a
+    android.content.Context context -> b
+    android.app.Instrumentation mBase -> c
+    void <init>(android.app.Instrumentation,android.content.Context) -> <init>
+    android.app.Activity newActivity(java.lang.Class,android.content.Context,android.os.IBinder,android.app.Application,android.content.Intent,android.content.pm.ActivityInfo,java.lang.CharSequence,android.app.Activity,java.lang.String,java.lang.Object) -> newActivity
+    android.app.Activity newActivity(java.lang.ClassLoader,java.lang.String,android.content.Intent) -> newActivity
+    void callActivityOnCreate(android.app.Activity,android.os.Bundle) -> callActivityOnCreate
+    android.app.UiAutomation getUiAutomation() -> getUiAutomation
+    void onCreate(android.os.Bundle) -> onCreate
+    void start() -> start
+    void onStart() -> onStart
+    boolean onException(java.lang.Object,java.lang.Throwable) -> onException
+    void sendStatus(int,android.os.Bundle) -> sendStatus
+    void finish(int,android.os.Bundle) -> finish
+    void setAutomaticPerformanceSnapshots() -> setAutomaticPerformanceSnapshots
+    void startPerformanceSnapshot() -> startPerformanceSnapshot
+    void endPerformanceSnapshot() -> endPerformanceSnapshot
+    void onDestroy() -> onDestroy
+    android.content.Context getContext() -> getContext
+    android.content.ComponentName getComponentName() -> getComponentName
+    android.content.Context getTargetContext() -> getTargetContext
+    boolean isProfiling() -> isProfiling
+    void startProfiling() -> startProfiling
+    void stopProfiling() -> stopProfiling
+    void setInTouchMode(boolean) -> setInTouchMode
+    void waitForIdle(java.lang.Runnable) -> waitForIdle
+    void waitForIdleSync() -> waitForIdleSync
+    void runOnMainSync(java.lang.Runnable) -> runOnMainSync
+    android.app.Activity startActivitySync(android.content.Intent) -> startActivitySync
+    void addMonitor(android.app.Instrumentation$ActivityMonitor) -> addMonitor
+    android.app.Instrumentation$ActivityMonitor addMonitor(android.content.IntentFilter,android.app.Instrumentation$ActivityResult,boolean) -> addMonitor
+    android.app.Instrumentation$ActivityMonitor addMonitor(java.lang.String,android.app.Instrumentation$ActivityResult,boolean) -> addMonitor
+    boolean checkMonitorHit(android.app.Instrumentation$ActivityMonitor,int) -> checkMonitorHit
+    android.app.Activity waitForMonitor(android.app.Instrumentation$ActivityMonitor) -> waitForMonitor
+    android.app.Activity waitForMonitorWithTimeout(android.app.Instrumentation$ActivityMonitor,long) -> waitForMonitorWithTimeout
+    void removeMonitor(android.app.Instrumentation$ActivityMonitor) -> removeMonitor
+    boolean invokeMenuActionSync(android.app.Activity,int,int) -> invokeMenuActionSync
+    boolean invokeContextMenuAction(android.app.Activity,int,int) -> invokeContextMenuAction
+    void sendStringSync(java.lang.String) -> sendStringSync
+    void sendKeySync(android.view.KeyEvent) -> sendKeySync
+    void sendKeyDownUpSync(int) -> sendKeyDownUpSync
+    void sendCharacterSync(int) -> sendCharacterSync
+    void sendPointerSync(android.view.MotionEvent) -> sendPointerSync
+    void sendTrackballEventSync(android.view.MotionEvent) -> sendTrackballEventSync
+    android.app.Application newApplication(java.lang.ClassLoader,java.lang.String,android.content.Context) -> newApplication
+    void callApplicationOnCreate(android.app.Application) -> callApplicationOnCreate
+    void callActivityOnDestroy(android.app.Activity) -> callActivityOnDestroy
+    void callActivityOnRestoreInstanceState(android.app.Activity,android.os.Bundle) -> callActivityOnRestoreInstanceState
+    void callActivityOnPostCreate(android.app.Activity,android.os.Bundle) -> callActivityOnPostCreate
+    void callActivityOnNewIntent(android.app.Activity,android.content.Intent) -> callActivityOnNewIntent
+    void callActivityOnStart(android.app.Activity) -> callActivityOnStart
+    void callActivityOnRestart(android.app.Activity) -> callActivityOnRestart
+    void callActivityOnResume(android.app.Activity) -> callActivityOnResume
+    void callActivityOnStop(android.app.Activity) -> callActivityOnStop
+    void callActivityOnSaveInstanceState(android.app.Activity,android.os.Bundle) -> callActivityOnSaveInstanceState
+    void callActivityOnPause(android.app.Activity) -> callActivityOnPause
+    void callActivityOnUserLeaving(android.app.Activity) -> callActivityOnUserLeaving
+    void startAllocCounting() -> startAllocCounting
+    void stopAllocCounting() -> stopAllocCounting
+    android.os.Bundle getAllocCounts() -> getAllocCounts
+    android.os.Bundle getBinderCounts() -> getBinderCounts
+    void <clinit>() -> <clinit>
+qiyi.bundle.runtime.RuntimeArgs -> qiyi.bundle.b.e:
+    android.app.Application androidApplication -> a
+    android.content.res.Resources delegateResources -> b
+qiyi.bundle.util.APKUtil -> qiyi.bundle.c.a:
+    void copyInputStreamToFile(java.io.InputStream,java.io.File) -> a
+qiyi.bundle.util.StringUtil -> qiyi.bundle.c.b:
+    boolean isEmpty(java.lang.String) -> a
+    java.lang.String subStringAfter(java.lang.String,java.lang.String) -> a
+qiyi.compomentprj.BundleBaseApplication -> qiyi.compomentprj.BundleBaseApplication:
+    void <init>() -> <init>
+    void onCreate() -> onCreate
+qiyi.compomentprj.CircleImageView -> qiyi.compomentprj.CircleImageView:
+    android.widget.ImageView$ScaleType SCALE_TYPE -> a
+    android.graphics.Bitmap$Config BITMAP_CONFIG -> b
+    android.graphics.RectF mDrawableRect -> c
+    android.graphics.RectF mBorderRect -> d
+    android.graphics.Matrix mShaderMatrix -> e
+    android.graphics.Paint mBitmapPaint -> f
+    android.graphics.Paint mBorderPaint -> g
+    android.graphics.Paint mFillPaint -> h
+    int mBorderColor -> i
+    int mBorderWidth -> j
+    int mFillColor -> k
+    android.graphics.Bitmap mBitmap -> l
+    android.graphics.BitmapShader mBitmapShader -> m
+    int mBitmapWidth -> n
+    int mBitmapHeight -> o
+    float mDrawableRadius -> p
+    float mBorderRadius -> q
+    android.graphics.ColorFilter mColorFilter -> r
+    boolean mReady -> s
+    boolean mSetupPending -> t
+    boolean mBorderOverlay -> u
+    boolean mDisableCircularTransformation -> v
+    void <init>(android.content.Context) -> <init>
+    void <init>(android.content.Context,android.util.AttributeSet) -> <init>
+    void <init>(android.content.Context,android.util.AttributeSet,int) -> <init>
+    void init() -> a
+    android.widget.ImageView$ScaleType getScaleType() -> getScaleType
+    void setScaleType(android.widget.ImageView$ScaleType) -> setScaleType
+    void setAdjustViewBounds(boolean) -> setAdjustViewBounds
+    void onDraw(android.graphics.Canvas) -> onDraw
+    void onSizeChanged(int,int,int,int) -> onSizeChanged
+    void setPadding(int,int,int,int) -> setPadding
+    void setPaddingRelative(int,int,int,int) -> setPaddingRelative
+    int getBorderColor() -> getBorderColor
+    void setBorderColor(int) -> setBorderColor
+    void setBorderColorResource(int) -> setBorderColorResource
+    int getFillColor() -> getFillColor
+    void setFillColor(int) -> setFillColor
+    void setFillColorResource(int) -> setFillColorResource
+    int getBorderWidth() -> getBorderWidth
+    void setBorderWidth(int) -> setBorderWidth
+    void setBorderOverlay(boolean) -> setBorderOverlay
+    void setDisableCircularTransformation(boolean) -> setDisableCircularTransformation
+    void setImageBitmap(android.graphics.Bitmap) -> setImageBitmap
+    void setImageDrawable(android.graphics.drawable.Drawable) -> setImageDrawable
+    void setImageResource(int) -> setImageResource
+    void setImageURI(android.net.Uri) -> setImageURI
+    void setColorFilter(android.graphics.ColorFilter) -> setColorFilter
+    android.graphics.ColorFilter getColorFilter() -> getColorFilter
+    void applyColorFilter() -> b
+    android.graphics.Bitmap getBitmapFromDrawable(android.graphics.drawable.Drawable) -> a
+    void initializeBitmap() -> c
+    void setup() -> d
+    android.graphics.RectF calculateBounds() -> e
+    void updateShaderMatrix() -> f
+    void <clinit>() -> <clinit>
+qiyi.compomentprj.MainActivity -> qiyi.compomentprj.MainActivity:
+    android.widget.Button mOpenPluginBtn -> a
+    boolean flag -> b
+    void <init>() -> <init>
+    void onCreate(android.os.Bundle) -> onCreate
+    boolean setapkClassloaderAndLoadRes2() -> a
+    java.lang.String buildBundleKey() -> b
+    java.util.List getBundleEntryNames(java.util.zip.ZipFile,java.lang.String,java.lang.String) -> a
+    void processLibsBundles(java.util.zip.ZipFile,java.util.List) -> a
+    boolean processLibsBundle(java.util.zip.ZipFile,java.lang.String) -> a
+    java.lang.String getPackageNameFromEntryName(java.lang.String) -> a
+    boolean access$000(qiyi.compomentprj.MainActivity) -> a
+    boolean access$100(qiyi.compomentprj.MainActivity) -> b
+    java.util.List access$200(qiyi.compomentprj.MainActivity,java.util.zip.ZipFile,java.lang.String,java.lang.String) -> a
+    void access$300(qiyi.compomentprj.MainActivity,java.util.zip.ZipFile,java.util.List) -> a
+qiyi.compomentprj.MainActivity$1 -> qiyi.compomentprj.MainActivity$1:
+    qiyi.compomentprj.MainActivity this$0 -> a
+    void <init>(qiyi.compomentprj.MainActivity) -> <init>
+    void onClick(android.view.View) -> onClick
+qiyi.compomentprj.MainActivity$2 -> qiyi.compomentprj.MainActivity$2:
+    qiyi.compomentprj.MainActivity this$0 -> a
+    void <init>(qiyi.compomentprj.MainActivity) -> <init>
+    void onClick(android.view.View) -> onClick
+qiyi.compomentprj.MainActivity$3 -> qiyi.compomentprj.MainActivity$3:
+    java.lang.String val$bundleKey -> a
+    qiyi.compomentprj.MainActivity this$0 -> b
+    void <init>(qiyi.compomentprj.MainActivity,java.lang.String) -> <init>
+    void run() -> run
+qiyi.compomentprj.Main_SecActivity -> qiyi.compomentprj.Main_SecActivity:
+    void <init>() -> <init>
+    void onCreate(android.os.Bundle) -> onCreate
+qiyi.compomentprj.R -> qiyi.compomentprj.a:
+qiyi.compomentprj.R$styleable -> qiyi.compomentprj.a$a:
+    int[] CircleImageView -> CircleImageView
+    int CircleImageView_civ_border_color -> CircleImageView_civ_border_color
+    int CircleImageView_civ_border_overlay -> CircleImageView_civ_border_overlay
+    int CircleImageView_civ_border_width -> CircleImageView_civ_border_width
+    int CircleImageView_civ_fill_color -> CircleImageView_civ_fill_color
+    void <clinit>() -> <clinit>

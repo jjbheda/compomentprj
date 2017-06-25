@@ -1,0 +1,57 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.1.0"
+    defaultConfig {
+        applicationId "qiyi.compomentprj"
+        minSdkVersion 14
+        targetSdkVersion 19
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets{
+        main{
+            manifest.srcFile 'AndroidManifest.xml'
+            assets.srcDirs = ['assets']
+            res.srcDirs =['res']
+            resources.srcDirs=['src']
+            java.srcDirs=['src']
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':bundle')
+    compile project(':businessmodule')
+}
+
+//打包后产出物复制到build-outputs目录。apk、manifest、mapping
+task copyReleaseOutputs(type:Copy){
+    from ("$buildDir/outputs/apk/QYVideoClient-release-unsigned.apk") {
+        rename 'QYVideoClient-release-unsigned.apk', 'QYVideoClient-base-release.apk'
+    }
+    from "$buildDir/intermediates/manifests/full/release/AndroidManifest.xml"
+    from ("$buildDir/outputs/mapping/release/mapping.txt") {
+        rename 'mapping.txt', 'QYVideoClient-base-mapping.txt'
+    }
+
+    into new File(rootDir, 'build-outputs')
+}
+
+afterEvaluate {
+    tasks['assembleRelease'].dependsOn('clean') <<{
+        print '----------先执行clean----------'
+        copyReleaseOutputs.execute()
+    }
+}
+

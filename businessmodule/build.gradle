@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+
+version "1.0"
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion '24.0.2'
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    sourceSets{
+        main{
+            manifest.srcFile 'AndroidManifest.xml'
+            assets.srcDirs = ['assets']
+            res.srcDirs =['res']
+            resources.srcDirs=['src']
+            java.srcDirs=['src']
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+task makeJar(type: Copy, dependsOn: 'build') {
+    from('build/intermediates/bundles/release/')
+    into('../../../libs')
+    include('classes.jar')
+    rename('classes.jar', 'businessmodule.jar')
+}
+
+uploadArchives {
+    repositories {
+            flatDir name: 'QYRepo', dirs: "${rootDir}/QYRepo/localRepo"
+    }
+
+}
